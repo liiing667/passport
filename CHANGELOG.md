@@ -5,6 +5,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Security
+
+- `failureRedirect`, `successRedirect`, and `successReturnToOrRedirect`
+  redirect targets are now sanitized before being sent to the user agent.
+  Scheme-relative URLs, URLs containing backslashes or control characters, and
+  non-`http(s)` schemes can no longer redirect outside the application; such
+  values fall back to `/` (or to the configured default for
+  `successReturnToOrRedirect`).
+- `req.session.returnTo` is now consumed exactly once on successful
+  authentication, even when its value is unsafe, and is never consulted on
+  authentication failure, preventing redirect loops back to protected entries.
 
 ## [0.7.0] - 2023-11-27
 ### Changed
