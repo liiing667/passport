@@ -6,6 +6,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- `req#login()` serializes the user before regenerating the session, making
+login an atomic state transition.  If serialization fails, any previously
+established session is left intact rather than being destroyed.
+
+### Security
+- Improved robustness against session fixation attacks.  A failed login
+attempt no longer invalidates the existing session, and a successful login
+continues to regenerate the session so that a pre-planted session identifier
+cannot be reused.
+
 ## [0.7.0] - 2023-11-27
 ### Changed
 - Set `req.authInfo` by default when using the `assignProperty` option to

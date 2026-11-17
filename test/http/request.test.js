@@ -528,8 +528,8 @@ describe('http.ServerRequest', function() {
         expect(req.isUnauthenticated()).to.be.true;
       });
       
-      it('should regenerate session', function() {
-        expect(req.session.id).to.equal('2');
+      it('should not regenerate session', function() {
+        expect(req.session.id).to.equal('1');
       });
       
       it('should not set user', function() {
@@ -537,7 +537,7 @@ describe('http.ServerRequest', function() {
       });
       
       it('should not serialize user', function() {
-        expect(req.session['passport']).to.be.undefined;
+        expect(req.session['passport'].user).to.be.undefined;
       });
     });
     

@@ -1,6 +1,22 @@
 /* global describe, it, expect, before */
 /* jshint expr: true */
 
+// When run under `node --test` (rather than mocha), wire up the test
+// functions and assertions that the mocha bootstrap would otherwise provide.
+if (typeof describe === 'undefined') {
+  var nodetest = require('node:test');
+  global.describe = nodetest.describe;
+  global.it = nodetest.it;
+  global.before = function(fn) {
+    nodetest.before(function() {
+      return new Promise(function(resolve, reject) {
+        fn(function(err) { return err ? reject(err) : resolve(); });
+      });
+    });
+  };
+  require('../bootstrap/node');
+}
+
 var chai = require('chai')
   , SessionStrategy = require('../../lib/strategies/session');
 
