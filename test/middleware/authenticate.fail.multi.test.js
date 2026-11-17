@@ -1,6 +1,8 @@
 /* global describe, it, expect, before */
 /* jshint expr: true */
 
+require('../bootstrap/node-test');
+
 var chai = require('chai')
   , authenticate = require('../../lib/middleware/authenticate')
   , Passport = require('../..').Passport;

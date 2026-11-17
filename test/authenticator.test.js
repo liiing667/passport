@@ -1,6 +1,8 @@
 /* global describe, it, expect, before */
 /* jshint expr: true, sub: true */
 
+require('./bootstrap/node-test');
+
 var Authenticator = require('../lib/authenticator');
 
 
