@@ -6,6 +6,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Security
+
+- `authenticate()` middleware now distinguishes authentication rejections
+(`this.fail()`) from strategy faults (`this.fail(new Error())`) and system
+exceptions (`this.error()`).  Internal error messages supplied to the failure
+action are no longer echoed through flash messages, session messages, the
+`WWW-Authenticate` header, or the response body.  In a multi-strategy chain an
+earlier internal fault no longer overrides a later, displayable challenge.
+Apps that want faults routed through the error-handling chain can opt in with
+the existing `failWithError` option, which emits a generic
+`AuthenticationError` without the internal message.  Custom callbacks retain
+their previous invocation order and signature.
+
 ## [0.7.0] - 2023-11-27
 ### Changed
 - Set `req.authInfo` by default when using the `assignProperty` option to
